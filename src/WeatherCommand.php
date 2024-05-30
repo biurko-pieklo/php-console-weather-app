@@ -12,7 +12,6 @@ class WeatherCommand extends Command
         parent::__construct('weather', 'Get the weather');
     }
 
-    // This method is auto called before `self::execute()` and receives `Interactor $io` instance
     public function interact(Interactor $io) : void
     {
         $io->write('Dostępne miasta:', true);
@@ -32,6 +31,8 @@ class WeatherCommand extends Command
 
             if ($city == 'exit') {
                 break;
+            } else if (array_key_exists($city, $selected)) {
+                $io->write('To miasto jest już wybrane', true);
             } else if (array_key_exists($city, $json)) {
                 $api = new OpenWeatherAPI($json[$city]['lat'], $json[$city]['lng']);
                 $data = $api->handleIO($io);
@@ -60,8 +61,10 @@ class WeatherCommand extends Command
     {
         $io = $this->app()->io();
 
-        foreach ($cities as $city => $data) {
-            $io->write($city, true);
-        }
+        match ($format) {
+            'PDF' => Writer::toPDF($cities),
+            'JSON' => Writer::toJSON($cities),
+            'XML' => Writer::toXML($cities),
+        };
     }
 }

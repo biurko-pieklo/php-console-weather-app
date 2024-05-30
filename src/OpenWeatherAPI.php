@@ -32,20 +32,20 @@ class OpenWeatherAPI {
         return $this->data['wind']['speed'];
     }
 
-    public function handleIO(Interactor $io) {
-        $io->write("Temperatura: {$this->getTemp()}oC", true);
-        $io->write("Temperatura odczuwalna: {$this->getFeelsLike()}oC", true);
-        $io->write("Ciśnienie: {$this->getPressure()}mPa", true);
-        $io->write("Wilgotność: {$this->getHumidity()}%", true);
-        $io->write("Prędkość wiatru: {$this->getWindSpeed()}m/s", true);
-
-        return [
-            'Temperatura' => $this->getTemp(),
-            'Odczuwalna' => $this->getFeelsLike(),
-            'Ciśnienie' => $this->getPressure(),
-            'Wilgotność' => $this->getHumidity(),
-            'Wiatr' => $this->getWindSpeed(),
+    public function handleIO(Interactor $io): array {
+        $data = [
+            'Temperature' => "{$this->getTemp()}oC",
+            'Feels like' => "{$this->getFeelsLike()}oC",
+            'Pressure' => "{$this->getPressure()}mPa",
+            'Humidity' => "{$this->getHumidity()}%",
+            'Wind' => "{$this->getWindSpeed()}m/s",
         ];
+
+        foreach ($data as $key => $value) {
+            $io->write($key . ': ' . $value . "\n");
+        }
+
+        return $data;
     }
 
 }
