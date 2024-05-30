@@ -1,6 +1,7 @@
 {
     "require": {
-        "adhocore/cli": "^v1.0.0"
+        "adhocore/cli": "^v1.0.0",
+        "fpdf/fpdf": "^1.86"
     },
     "autoload": {
         "psr-4": {
