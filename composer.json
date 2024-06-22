@@ -7,5 +7,8 @@
         "psr-4": {
             "weather\\": "./src"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
     }
 }
